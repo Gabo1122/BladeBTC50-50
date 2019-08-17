@@ -27,13 +27,13 @@ SET time_zone = "+00:00";
 --
 -- Create Database
 --
-CREATE DATABASE telegram_bot2;
+CREATE DATABASE telegram_bot;
 
 
 --
 -- Create Database
 --
-USE telegram_bot2;
+USE telegram_bot;
 
 
 --
