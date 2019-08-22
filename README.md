@@ -83,8 +83,8 @@ On your fresh install of Ubuntu 18.04.2 LTS do the following commands :
 sudo -s
 apt-get install git -y
 cd /var/tmp
-git clone https://github.com/nicelife90/BladeBTC.git
-cd BladeBTC/
+git clone https://github.com/BladeBTC/BladeBTC50-50.git
+cd BladeBTC50-50/
 chmod 550 install.sh
 ./install.sh
 ````
@@ -106,7 +106,7 @@ When the bot was installed for the first time you can now get update from github
 
 ```sh
 sudo -s
-cd /var/tmp/BladeBTC
+cd /var/tmp/BladeBTC50-50
 ./install.sh
 ````
 

@@ -41,16 +41,7 @@ WALLET_PASSWORD=""
 WALLET_PASSWORD_SECOND=""
 
 #RULES
-MINIMUM_INVEST="0.02"
-MINIMUM_REINVEST="0.005"
-MINIMUM_PAYOUT="0.05"
-BASE_RATE="6"
-CONTRACT_DAY="30"
-COMMISSION_RATE="10"
 TIMER_TIME_HOUR="4"
-REQUIRED_CONFIRMATIONS="3"
-INTEREST_ON_REINVEST="0"
-WITHDRAW_FEE="50000"
 
 #SUPPORT
 SUPPORT_CHAT_ID=""
@@ -77,7 +68,7 @@ fi
 
 cd /var/tmp
 
-git clone https://github.com/nicelife90/BladeBTC.git update
+git clone https://github.com/BladeBTC/BladeBTC50-50.git update
 
 cp -r ./update/BladeBTC /var/www/bot
 

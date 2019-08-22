@@ -69,7 +69,8 @@ class OutCommand extends Command
                 'one_time_keyboard' => false,
             ]);
 
-            $out_amount = trim(substr($this->update->getMessage()->getText(), 4));
+
+            $out_amount = trim(explode(" ", $this->update->getMessage()->getText())[1]);
 
 
             try {
@@ -81,7 +82,7 @@ class OutCommand extends Command
                 if (empty($out_amount)) {
 
                     $this->replyWithMessage([
-                        'text' => "You need to enter an amount after the /out command. The amount received by our server was empty.",
+                        'text' => "You need to enter an amount after the /out command. The amount received by our server was empty. Be sure to put only one space between the command and the amount.",
                         'reply_markup' => $reply_markup,
                         'parse_mode' => 'HTML',
                     ]);
@@ -95,7 +96,7 @@ class OutCommand extends Command
                 elseif (!is_numeric($out_amount) || $out_amount <  Currency::GetBTCValueFromCurrency(InvestmentPlan::getValueByName("minimum_payout_usd"))) {
 
                     $this->replyWithMessage([
-                        'text' => "You need to payout at least " . Currency::GetBTCValueFromCurrency(InvestmentPlan::getValueByName("minimum_payout_usd")) . " BTC. Also the amount need to be numeric.",
+                        'text' => "You need to payout at least " . Currency::GetBTCValueFromCurrency(InvestmentPlan::getValueByName("minimum_payout_usd")) . " BTC. Also the amount need to be numeric. Be sure to put only one space between the command and the amount.",
                         'reply_markup' => $reply_markup,
                         'parse_mode' => 'HTML',
                     ]);
