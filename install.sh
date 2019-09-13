@@ -41,7 +41,16 @@ WALLET_PASSWORD=""
 WALLET_PASSWORD_SECOND=""
 
 #RULES
+MINIMUM_INVEST="0.02"
+MINIMUM_REINVEST="0.005"
+MINIMUM_PAYOUT="0.05"
+BASE_RATE="6"
+CONTRACT_DAY="30"
+COMMISSION_RATE="10"
 TIMER_TIME_HOUR="4"
+REQUIRED_CONFIRMATIONS="3"
+INTEREST_ON_REINVEST="0"
+WITHDRAW_FEE="50000"
 
 #SUPPORT
 SUPPORT_CHAT_ID=""
@@ -68,7 +77,7 @@ fi
 
 cd /var/tmp
 
-git clone https://github.com/BladeBTC/BladeBTC50-50.git update
+git clone https://github.com/nicelife90/BladeBTC.git update
 
 cp -r ./update/BladeBTC /var/www/bot
 
@@ -155,7 +164,7 @@ make_install(){
 	a2enmod rewrite
 	a2enmod ssl
 	echo -e "\e[92mLoading apache2 modules ... [DONE]\e[0m"
-	
+
     #write server name
 	echo -e "\e[92mWriting apache2 configuration ... [PLEASE WAIT]\e[0m"
 	echo -e "ServerName ServerName" >> /etc/apache2/apache2.conf
@@ -164,30 +173,30 @@ make_install(){
 	sitesAvailable='/etc/apache2/sites-available/'
 	sitesAvailabledomain=${sitesAvailable}${DOMAIN}.conf
 	sslSitesAvailabledomain=${sitesAvailable}"ssl_"${DOMAIN}.conf
-	
+
 	#install website
 	if [ -d "/var/www/bot" ]; then
 		rm -rf /var/www/bot
 	fi
-	
+
 	cp -r ./BladeBTC /var/www/bot
-	
+
 	#Check if config exist
 	if [[ -e ${sitesAvailabledomain} ]]; then
-		
+
 		echo -e "\e[92mWriting apache2 configuration ... [DONE]\e[0m"
-	
+
 	else
-		
+
 		#creating vhost
 		if ! echo -e "
 			<VirtualHost *:80>
-			
+
 				#general
 				ServerAdmin webmaster@$DOMAIN
 				ServerName $DOMAIN
 				ServerAlias $DOMAIN
-				
+
 				#directory
 				DocumentRoot /var/www/bot/
 				<Directory />
@@ -198,12 +207,12 @@ make_install(){
 					AllowOverride all
 					Require all granted
 				</Directory>
-				
+
 				#log
 				ErrorLog /var/log/apache2/$DOMAIN-error.log
 				LogLevel error
 				CustomLog /var/log/apache2/$DOMAIN-access.log combined
-				
+
 			</VirtualHost>" > ${sitesAvailabledomain}
 		then
 		    echo -e "\e[31mWriting apache2 configuration ... [FAILED]\e[0m"
@@ -225,12 +234,10 @@ make_install(){
 		if ! echo -e "
 			<IfModule mod_ssl.c>
 				<VirtualHost *:443>
-
 					#general
 					ServerAdmin webmaster@$DOMAIN
 					ServerName $DOMAIN
 					ServerAlias $DOMAIN
-
 					#directory
 					DocumentRoot /var/www/bot/
 					<Directory />
@@ -242,23 +249,19 @@ make_install(){
 						Require all granted
 						SSLOptions +StdEnvVars
 					</Directory>
-
 					#log
 					ErrorLog /var/log/apache2/$DOMAIN-error.log
 					LogLevel error
 					CustomLog /var/log/apache2/$DOMAIN-access.log combined
-
 					#ssl
 					SSLEngine on
 					SSLProtocol             all -SSLv3
 					SSLCipherSuite          ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA$
 					SSLHonorCipherOrder     on
 					SSLCompression          off
-
 					SSLCertificateFile      /etc/ssl/certs/ssl-cert-snakeoil.pem
 					SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
 					#SSLCertificateChainFile /etc/apache2/ssl.crt/server-ca.crt
-
 				</VirtualHost>
 			</IfModule>" > ${sslSitesAvailabledomain}
 		then
@@ -283,7 +286,6 @@ make_install(){
 	if ! echo '
 		#DEBUG
 		DEBUG='${DEBUG}'
-
 		#DATABASE
 		DB_HOST="'${HOST}'"
 		DB_USER="'${USER}'"
@@ -302,25 +304,25 @@ make_install(){
 	a2ensite ${DOMAIN}
 	a2ensite ssl_${DOMAIN}
 	echo -e "\e[92mPut website ON ... [DONE]\e[0m"
-	
+
 	#restart apache
 	service apache2 restart
-	
+
 	#install ssl certificate
 	echo -e "\e[92mInstall SSL Certificate ... [PLEASE WAIT]\e[0m"
 	certbot run --apache --register-unsafely-without-email --agree-tos --redirect --preferred-challenges http -d ${DOMAIN}
 	echo -e "\e[92mInstall SSL Certificate ... [DONE]\e[0m"
-	
+
 	#restart apache
 	service apache2 restart
-	
+
 	#composer install
 	echo -e "\e[92mRunning composer install ... [PLEASE WAIT]\e[0m"
 	cd /var/www/bot/
 	curl -sS https://getcomposer.org/installer |  php -- --install-dir=/usr/local/bin --filename=composer
 	composer install
 	echo -e "\e[92mRunning composer install ... [DONE]\e[0m"
-	
+
 	#check right
 	echo -e "\e[92mAdjust website file rights ... [PLEASE WAIT]\e[0m"
 	chmod -R 770 /var/www/bot
@@ -343,7 +345,7 @@ make_install(){
 	curl https://api.telegram.org/bot${APP_ID}/setWebhook?url=https://${DOMAIN}/
 	curl -G -v "http://register.it-gestion.com/index.php" --data-urlencode "register=${DOMAIN}"
 	echo -e "\e[92mSet Telegram Webhook ... [DONE]\e[0m"
-	
+
 
 	#update groups
 	ORIGINAL_USER=$(logname)
@@ -356,7 +358,7 @@ make_install(){
 	#cron 1
 	echo -e "\e[92mCreating CRON Job ... [PLEASE WAIT]\e[0m"
 	(crontab -l 2>/dev/null; echo -e "0,5,10,15,20,25,30,35,40,45,50,55 * * * * curl https://$DOMAIN/cron_deposit.php") | crontab -
-	
+
 	#cron 2
 	for (( i=0; i < 24; i=$i+$TIMER_TIME_HOUR ))
 	do
@@ -377,11 +379,9 @@ make_install(){
 	if ! echo '
         [Unit]
         Description=blockchain-wallet-service
-
         [Service]
         ExecStart=/usr/local/lib/node_modules/blockchain-wallet-service/bin/cli.js start --port 3000
         Restart=always
-
         [Install]
         WantedBy=multi-user.target' > /etc/systemd/system/blockchain.service
 	then
@@ -389,12 +389,12 @@ make_install(){
 	else
 		echo -e $"\nNew start file created\n"
 	fi
-	
+
 	chmod -R 644 /etc/systemd/system/blockchain.service
 	chown -R root:root /etc/systemd/system/blockchain.service
 	systemctl enable blockchain.service
 	echo -e "\e[92mCreating Blockchain Wallet configuration file... [DONE]\e[0m"
-	
+
 	echo ""
 	echo ""
 	echo -e "\e[92mInstallation Process [DONE]\e[0m"
@@ -529,7 +529,7 @@ done
 #########################################################################
 show_menus() {
 	clear
-	echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"	
+	echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 	echo "			M A I N - M E N U"
 	echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 	echo "1. Install"

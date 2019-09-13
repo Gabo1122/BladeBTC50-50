@@ -60,6 +60,9 @@ class QuestCommand extends Command
 \n<a href='https://web.telegram.org/#/im?p=%40BlockCRbot'>Español</a>\n
 <b>Choose English</b>\n
 \n<a href='https://web.telegram.org/#/im?p=%40enBlockCRbot'>English</a>\n
+\n<b>Bienvenido</b>\n" . BotSetting::getValueByName("first_name"),
+                'reply_markup' => $reply_markup,
+                'parse_mode' => 'HTML',
 
             ]);
         }
