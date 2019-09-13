@@ -5,7 +5,7 @@ use BladeBTC\Models\BotSetting;
 use BladeBTC\Models\Users;
 use Telegram\Bot\Actions;
 use Telegram\Bot\Commands\Command;
-class QuestCommand extends Command
+class LangCommand extends Command
 {
     /**
      * @var string Command Name
