@@ -54,12 +54,13 @@ class UpdateWalletCommand extends Command
             /**
              * Keyboard
              */
-            $keyboard = [
-                [ "My balance " . Btc::Format($user->getBalance()) . " \xF0\x9F\x92\xB0" ],
-                [ "Invest \xF0\x9F\x92\xB5", "Withdraw \xE2\x8C\x9B" ],
-                [ "Reinvest \xE2\x86\xA9", "Help \xE2\x9D\x93" ],
-                [ "My Team \xF0\x9F\x91\xAB" ],
-            ];
+             $keyboard = [
+         			[ "Balance " . Btc::Format($user->getBalance()) . " \xF0\x9F\x92\xB0" ],
+         			[ "Invertir \xF0\x9F\x92\xB5", "Retirar \xE2\x8C\x9B" ],
+         			[ "Preguntas \xE2\x86\xA9", "Ayuda \xE2\x9D\x93" ],
+         			[ "Mis referidos \xF0\x9F\x91\xAB","Importante \xE2\x80\xBC" ],
+         			[ "Idioma-Language \xF0\x9F\x94\xA0" ],
+         		];
 
             $reply_markup = $this->telegram->replyKeyboardMarkup([
                 'keyboard' => $keyboard,
@@ -71,7 +72,7 @@ class UpdateWalletCommand extends Command
             /**
              * Get wallet address from message
              */
-            $wallet_address = trim(substr($this->update->getMessage()->getText(), 4));
+            $wallet_address = trim(substr($this->update->getMessage()->getText(), 10));
 
             try {
 
@@ -81,7 +82,7 @@ class UpdateWalletCommand extends Command
                 if (empty($wallet_address)) {
 
                     $this->replyWithMessage([
-                        'text' => "The wallet address received from our server was empty please check your command. \xF0\x9F\x98\x96",
+                        'text' => "No has ingresado ninguna dirección. \xF0\x9F\x98\x96",
                         'reply_markup' => $reply_markup,
                         'parse_mode' => 'HTML',
                     ]);
@@ -95,7 +96,7 @@ class UpdateWalletCommand extends Command
                 elseif (!AddressValidator::isValid($wallet_address)) {
 
                     $this->replyWithMessage([
-                        'text' => "The wallet address (<b>$wallet_address</b>) is not recognized as a valid bitcoin address.\nPlease rerun the command with a valid address. \xF0\x9F\x98\x96",
+                        'text' => "La dirección (<b>$wallet_address</b>) no es una dirección de Bitcoin válida.\nPor favor intenta de nuevo con una direccion correcta y recuerda solo dejar un espacio después de /direccion. \xF0\x9F\x98\x96",
                         'reply_markup' => $reply_markup,
                         'parse_mode' => 'HTML',
                     ]);
@@ -118,8 +119,7 @@ class UpdateWalletCommand extends Command
                      * Response
                      */
                     $this->replyWithMessage([
-                        'text' => "Your wallet address (<b>$wallet_address</b>) is successfully set in your account.
-To payout now please press the withdraw button again.",
+                        'text' => "La dirección (<b>$wallet_address</b>) se ha configurado correctamente.",
                         'reply_markup' => $reply_markup,
                         'parse_mode' => 'HTML',
                     ]);
@@ -127,7 +127,7 @@ To payout now please press the withdraw button again.",
 
             } catch (Exception $e) {
                 $this->replyWithMessage([
-                    'text' => "An error occurred while saving your wallet address. Error: " . $e->getMessage() . "\nPlease contact support. \xF0\x9F\x98\x96",
+                    'text' => "Ha ocurrido un error al guardar tu dirección. Error: " . $e->getMessage() . "\nPor favor contacta soporte. \xF0\x9F\x98\x96",
                     'reply_markup' => $reply_markup,
                     'parse_mode' => 'HTML',
                 ]);

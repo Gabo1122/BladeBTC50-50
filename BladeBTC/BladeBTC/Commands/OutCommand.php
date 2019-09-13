@@ -56,12 +56,13 @@ class OutCommand extends Command
             /**
              * Keyboard
              */
-            $keyboard = [
-                [ "My balance " . Btc::Format($user->getBalance()) . " \xF0\x9F\x92\xB0" ],
-                [ "Invest \xF0\x9F\x92\xB5", "Withdraw \xE2\x8C\x9B" ],
-                [ "Reinvest \xE2\x86\xA9", "Help \xE2\x9D\x93" ],
-                [ "My Team \xF0\x9F\x91\xAB" ],
-            ];
+             $keyboard = [
+         			[ "Balance " . Btc::Format($user->getBalance()) . " \xF0\x9F\x92\xB0" ],
+         			[ "Invertir \xF0\x9F\x92\xB5", "Retirar \xE2\x8C\x9B" ],
+         			[ "Preguntas \xE2\x86\xA9", "Ayuda \xE2\x9D\x93" ],
+         			[ "Mis referidos \xF0\x9F\x91\xAB","Importante \xE2\x80\xBC" ],
+         			[ "Idioma-Language \xF0\x9F\x94\xA0" ],
+         		];
 
             $reply_markup = $this->telegram->replyKeyboardMarkup([
                 'keyboard' => $keyboard,
@@ -82,7 +83,7 @@ class OutCommand extends Command
                 if (empty($out_amount)) {
 
                     $this->replyWithMessage([
-                        'text' => "You need to enter an amount after the /out command. The amount received by our server was empty. Be sure to put only one space between the command and the amount.",
+                        'text' => "Para retirar necesitas poner el monto que deseas retirar luego de la opción /sacar. Aun no has indicado el monto que deseas retirar.",
                         'reply_markup' => $reply_markup,
                         'parse_mode' => 'HTML',
                     ]);
@@ -96,7 +97,7 @@ class OutCommand extends Command
                 elseif (!is_numeric($out_amount) || $out_amount <  Currency::GetBTCValueFromCurrency(InvestmentPlan::getValueByName("minimum_payout_usd"))) {
 
                     $this->replyWithMessage([
-                        'text' => "You need to payout at least " . Currency::GetBTCValueFromCurrency(InvestmentPlan::getValueByName("minimum_payout_usd")) . " BTC. Also the amount need to be numeric. Be sure to put only one space between the command and the amount.",
+                        'text' => "Necesitas al menos " . Currency::GetBTCValueFromCurrency(InvestmentPlan::getValueByName("minimum_payout_usd")) . " BTC. para retirar e indicar el monto en números, también recuerda que para recibir fondos por tus referidos debes tener un plan activo.",
                         'reply_markup' => $reply_markup,
                         'parse_mode' => 'HTML',
                     ]);
@@ -109,7 +110,7 @@ class OutCommand extends Command
                 elseif ($user->getBalance() < $out_amount) {
 
                     $this->replyWithMessage([
-                        'text' => "I'm sorry to tell you this but your account have not enough balance.",
+                        'text' => "Aún no tienes fondos suficientes.",
                         'reply_markup' => $reply_markup,
                         'parse_mode' => 'HTML',
                     ]);
@@ -130,7 +131,7 @@ class OutCommand extends Command
                          * Response
                          */
                         $this->replyWithMessage([
-                            'text' => "The minimum withdraw amount is " . Btc::Format((Btc::SatoshiToBitcoin(InvestmentPlan::getValueByName('withdraw_fee')) + 0.00000100)) . "BTC. This will give you a refund of 0.00000100 BTC. This is because of the withdraw fee of " . BTC::Format(Btc::SatoshiToBitcoin(InvestmentPlan::getValueByName('withdraw_fee'))) . " BTC.",
+                            'text' => "El monto mínimo para retirar es " . Btc::Format((Btc::SatoshiToBitcoin(InvestmentPlan::getValueByName('withdraw_fee')) + 0.00000100)) . "BTC. Esto es debido al costo de la transacción en la red de Bitcoin. El cual es " . BTC::Format(Btc::SatoshiToBitcoin(InvestmentPlan::getValueByName('withdraw_fee'))) . " BTC.",
                             'reply_markup' => $reply_markup,
                             'parse_mode' => 'HTML',
                         ]);
@@ -154,7 +155,7 @@ class OutCommand extends Command
                              * Response
                              */
                             $this->replyWithMessage([
-                                'text' => "Message :\n<b>" . $transaction->message . "</b>\n" . "Transaction ID:\n<b>" . $transaction->txid . "</b>\n" . "Transaction Hash:\n<b>" . $transaction->tx_hash . "</b>",
+                                'text' => "Mensaje :\n<b>" . $transaction->message . "</b>\n" . "ID de transacción:\n<b>" . $transaction->txid . "</b>\n" . "Hash:\n<b>" . $transaction->tx_hash . "</b>",
                                 'reply_markup' => $reply_markup,
                                 'parse_mode' => 'HTML',
                             ]);
@@ -166,7 +167,7 @@ class OutCommand extends Command
                              * Response
                              */
                             $this->replyWithMessage([
-                                'text' => "An error occurred while withdrawing your BTC.\n<b>[Error] " . $transaction->error . "</b>. \xF0\x9F\x98\x96",
+                                'text' => "Ha ocurrido un error al retirar tus BTC.\n<b>[Error] " . $transaction->error . "</b>. \xF0\x9F\x98\x96",
                                 'reply_markup' => $reply_markup,
                                 'parse_mode' => 'HTML',
                             ]);
@@ -176,7 +177,7 @@ class OutCommand extends Command
             } catch (Exception $e) {
 
                 $this->replyWithMessage([
-                    'text' => "An error occurred during withdraw process.\n" . $e->getMessage() . ". \xF0\x9F\x98\x96",
+                    'text' => "Ha ocurrido un error al retirar tus BTC.\n" . $e->getMessage() . ". \xF0\x9F\x98\x96",
                     'reply_markup' => $reply_markup,
                     'parse_mode' => 'HTML'
                 ]);

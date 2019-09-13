@@ -41,6 +41,9 @@ class WebHookHandler
                 Commands\OutCommand::class,
                 Commands\ReferralCommand::class,
                 Commands\InfoCommand::class,
+                Commands\ImpoCommand::class,
+                Commands\QuestCommand::class,
+                Commands\LangCommand::class,
             ]);
 
 
@@ -115,28 +118,37 @@ class WebHookHandler
                 if (preg_match("/\bBalance\b/i", $text)) {
                     $telegram->getCommandBus()->handler('/balance', $updates);
                 }
-                elseif (preg_match("/\bInvest\b/i", $text)) {
+                elseif (preg_match("/\bInvertir\b/i", $text)) {
                     $telegram->getCommandBus()->handler('/invest', $updates);
                 }
-                elseif (preg_match("/\bWithdraw\b/i", $text)) {
+                elseif (preg_match("/\bRetirar\b/i", $text)) {
                     $telegram->getCommandBus()->handler('/withdraw', $updates);
                 }
                 elseif (preg_match("/\bReinvest\b/i", $text)) {
                     $telegram->getCommandBus()->handler('/reinvest', $updates);
                 }
-                elseif (preg_match("/\bBack\b/i", $text)) {
+                elseif (preg_match("/\bAtras\b/i", $text)) {
                     $telegram->getCommandBus()->handler('/back', $updates);
                 }
-                elseif (preg_match("/\bTeam\b/i", $text)) {
+                elseif (preg_match("/\bMis referidos\b/i", $text)) {
                     $telegram->getCommandBus()->handler('/referral', $updates);
                 }
-                elseif (preg_match("/\bHelp\b/i", $text)) {
+                elseif (preg_match("/\bAyuda\b/i", $text)) {
                     $telegram->getCommandBus()->handler('/info', $updates);
                 }
-                elseif (preg_match("/\/out/", $text)) {
+                elseif (preg_match("/\bPreguntas\b/i", $text)) {
+                    $telegram->getCommandBus()->handler('/quest', $updates);
+                }
+                elseif (preg_match("/\bImportante\b/i", $text)) {
+                    $telegram->getCommandBus()->handler('/impo', $updates);
+                }
+                elseif (preg_match("/\bIdioma-Language\b/i", $text)) {
+                    $telegram->getCommandBus()->handler('/lang', $updates);
+                }
+                elseif (preg_match("/\/sacar/", $text)) {
                     $telegram->getCommandBus()->handler('/out', $updates);
                 }
-                elseif (preg_match("/\/set/", $text)) {
+                elseif (preg_match("/\/direccion/", $text)) {
                     $telegram->getCommandBus()->handler('/update_wallet', $updates);
                 }
                 elseif (preg_match("/\/gwb/", $text)) {

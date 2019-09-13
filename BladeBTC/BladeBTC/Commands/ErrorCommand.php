@@ -51,12 +51,13 @@ class ErrorCommand extends Command
 			/**
 			 * Keyboard
 			 */
-			$keyboard = [
-				["My balance " . Btc::Format($user->getBalance()) . " \xF0\x9F\x92\xB0"],
-				["Invest \xF0\x9F\x92\xB5", "Withdraw \xE2\x8C\x9B"],
-				["Reinvest \xE2\x86\xA9", "Help \xE2\x9D\x93"],
-				["My Team \xF0\x9F\x91\xAB"],
-			];
+			 $keyboard = [
+	 			[ "Balance " . Btc::Format($user->getBalance()) . " \xF0\x9F\x92\xB0" ],
+	 			[ "Invertir \xF0\x9F\x92\xB5", "Retirar \xE2\x8C\x9B" ],
+	 			[ "Preguntas \xE2\x86\xA9", "Ayuda \xE2\x9D\x93" ],
+	 			[ "Mis referidos \xF0\x9F\x91\xAB","Importante \xE2\x80\xBC" ],
+	 			[ "Idioma-Language \xF0\x9F\x94\xA0" ],
+	 		];
 
 			$reply_markup = $this->telegram->replyKeyboardMarkup([
 				'keyboard'          => $keyboard,
@@ -68,7 +69,7 @@ class ErrorCommand extends Command
 			 * Response
 			 */
 			$this->replyWithMessage([
-				'text'         => "This command does not seem to be valid.",
+				'text'         => "Este comando es inválido.",
 				'reply_markup' => $reply_markup,
 				'parse_mode'   => 'HTML',
 			]);

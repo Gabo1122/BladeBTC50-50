@@ -56,12 +56,13 @@ class InvestCommand extends Command
             /**
              * Keyboard
              */
-            $keyboard = [
-                ["My balance " . Btc::Format($user->getBalance()) . " \xF0\x9F\x92\xB0"],
-                ["Invest \xF0\x9F\x92\xB5", "Withdraw \xE2\x8C\x9B"],
-                ["Reinvest \xE2\x86\xA9", "Help \xE2\x9D\x93"],
-                ["My Team \xF0\x9F\x91\xAB"],
-            ];
+             $keyboard = [
+         			[ "Balance " . Btc::Format($user->getBalance()) . " \xF0\x9F\x92\xB0" ],
+         			[ "Invertir \xF0\x9F\x92\xB5", "Retirar \xE2\x8C\x9B" ],
+         			[ "Preguntas \xE2\x86\xA9", "Ayuda \xE2\x9D\x93" ],
+         			[ "Mis referidos \xF0\x9F\x91\xAB","Importante \xE2\x80\xBC" ],
+         			[ "Idioma-Language \xF0\x9F\x94\xA0" ],
+         		];
 
             $reply_markup = $this->telegram->replyKeyboardMarkup([
                 'keyboard' => $keyboard,
@@ -76,7 +77,7 @@ class InvestCommand extends Command
             $active_investment_count = Investment::getActiveInvestment($user->getTelegramId());
             if (count($active_investment_count) > 0) {
                 $this->replyWithMessage([
-                    'text' => "You can only have one active investment. You need to wait the end of your current investment before doing reinvestment.",
+                    'text' => "Solo puedes depositar una vez al mes. Recuerda realizar tu pago el siguiente mes para poder recibir tu bono por referidos.",
                     'reply_markup' => $reply_markup,
                     'parse_mode' => 'HTML',
                 ]);
@@ -103,7 +104,7 @@ class InvestCommand extends Command
                          * Response
                          */
                         $this->replyWithMessage([
-                            'text' => "Here is your personal BTC address for your investments:",
+                            'text' => "Esta es tu dirección para invertir:",
                             'reply_markup' => $reply_markup,
                             'parse_mode' => 'HTML'
                         ]);
@@ -124,14 +125,14 @@ class InvestCommand extends Command
                         }
 
                         $this->replyWithMessage([
-                            'text' => "To start an investment and get the referral bonus send:\n\n<strong>" . $user->getCurrentMinimumBTC() . " BTC - aprox. " . InvestmentPlan::getValueByName("minimum_invest_usd") . " $ USD</strong>\n\nAfter correct transfer, your funds will be added to your account during an hour. Have fun and enjoy your referral bonus!",
+                            'text' => "Es necesario que inicies tu inversión para poder recibir el bono por referidos, la inversión es de:\n\n<strong>" . $user->getCurrentMinimumBTC() . " BTC - aproximadamente. " . InvestmentPlan::getValueByName("minimum_invest_usd") . " $ USD</strong>\n\nLuego de que realices tu primer pago debes esperar la confirmación que realiza la red de Bitcoin",
                             'reply_markup' => $reply_markup,
                             'parse_mode' => 'HTML'
                         ]);
 
                     } catch (Exception $e) {
                         $this->replyWithMessage([
-                            'text' => "An error occurred while generating your payment address.\n" . $e->getMessage() . ". \xF0\x9F\x98\x96",
+                            'text' => "Ha ocurrido un error generando tu dirección.\n" . $e->getMessage() . ". \xF0\x9F\x98\x96",
                             'reply_markup' => $reply_markup,
                             'parse_mode' => 'HTML'
                         ]);
@@ -140,7 +141,7 @@ class InvestCommand extends Command
 
                 } else {
                     $this->replyWithMessage([
-                        'text' => "An error occurred while generating your payment address.\n" . $payment_address->error . ". \xF0\x9F\x98\x96",
+                        'text' => "Ha ocurrido al generar tu dirección.\n" . $payment_address->error . ". \xF0\x9F\x98\x96",
                         'reply_markup' => $reply_markup,
                         'parse_mode' => 'HTML'
                     ]);

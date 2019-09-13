@@ -53,12 +53,13 @@ class BalanceCommand extends Command
 			/**
 			 * Keyboard
 			 */
-			$keyboard = [
-				["My balance " . Btc::Format($user->getBalance()) . " \xF0\x9F\x92\xB0"],
-				["Invest \xF0\x9F\x92\xB5", "Withdraw \xE2\x8C\x9B"],
-				["Reinvest \xE2\x86\xA9", "Help \xE2\x9D\x93"],
-				["My Team \xF0\x9F\x91\xAB"],
-			];
+			 $keyboard = [
+	 			[ "Balance " . Btc::Format($user->getBalance()) . " \xF0\x9F\x92\xB0" ],
+	 			[ "Invertir \xF0\x9F\x92\xB5", "Retirar \xE2\x8C\x9B" ],
+	 			[ "Preguntas \xE2\x86\xA9", "Ayuda \xE2\x9D\x93" ],
+	 			[ "Mis referidos \xF0\x9F\x91\xAB","Importante \xE2\x80\xBC" ],
+	 			[ "Idioma-Language \xF0\x9F\x94\xA0" ],
+	 		];
 
 			$reply_markup = $this->telegram->replyKeyboardMarkup([
 				'keyboard'          => $keyboard,
@@ -72,12 +73,12 @@ class BalanceCommand extends Command
 			 */
 			$investment = Investment::getActiveInvestment($user->getTelegramId());
 			if (count($investment) > 0) {
-				$investment_data = "\n<b>|   Amount   |   End   |</b>\n";
+				$investment_data = "\n<b>|   Balance   |   Termina   |</b>\n";
 				foreach ($investment as $row) {
 					$investment_data .= "|" . $row->amount . "|" . $row->contract_end_date . "|\n";
 				}
 			} else {
-				$investment_data = "No active investment";
+				$investment_data = "No estás activo";
 			}
 
 
@@ -85,28 +86,25 @@ class BalanceCommand extends Command
 			 * Response
 			 */
 			$this->replyWithMessage([
-				'text'         => "Your account balance:
+				'text'         => "Tu balance:
 <b>" . Btc::Format($user->getBalance()) . "</b> BTC\n
-Total invested:
+Total invertido:
 <b>" . Btc::Format($user->getInvested()) . "</b> BTC\n
-Total reinvested:
-<b>" . Btc::Format($user->getReinvested()) . "</b> BTC\n
-Total Payout:
+Total para retirar:
 <b>" . Btc::Format($user->getPayout()) . "</b> BTC\n
-Pending commission (Referral):
+Comisión pendiente (Por referidos):
 <b>" . Btc::Format($user->getCommission()) . "</b> BTC\n
-Total deposit (confirmed):
+Total depositado (confirmado):
 <b>" . Btc::Format($user->getLastConfirmed()) . "</b> BTC\n
-Total balance of deposit (Lower than minimum invest):
+Total depositado (Menor de lo necesario):
 <b>" . Btc::Format($user->getLastConfirmed() - $user->getInvested()) . "</b> BTC\n
-<b>Your investment:</b>
+<b>Tu inversión:</b>
 " . $investment_data . "
 \n
-You may start another investment by pressing the \"Invest\" button.",
+Para iniciar tu plan selecciona la opción \"Invertir\".",
 				'reply_markup' => $reply_markup,
 				'parse_mode'   => 'HTML',
 			]);
 		}
 	}
 }
-

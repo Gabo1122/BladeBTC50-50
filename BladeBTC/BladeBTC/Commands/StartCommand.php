@@ -65,7 +65,7 @@ class StartCommand extends Command
                     "last_name"  => isset($last_name) ? $last_name : "not set",
                     "id"         => isset($id) ? $id : "not set",
                 ]);
-				
+
 				/**
 				 * Referral
 				 */
@@ -77,7 +77,7 @@ class StartCommand extends Command
                  * Response
                  */
                 $this->replyWithMessage([
-                    'text'       => "Welcome <b>" . $first_name . "</b>. \xF0\x9F\x98\x84 \nTo get support please go to " . BotSetting::getValueByName("support_chat_id"),
+                    'text'       => "Bienvenido <b>" . $first_name . "</b>. \xF0\x9F\x98\x84 \nSi necesitas más ayuda contacta a quien te ha referido " . BotSetting::getValueByName("telegram_id_referent"),
                     'parse_mode' => 'HTML',
                 ]);
 
@@ -87,37 +87,38 @@ class StartCommand extends Command
                 $this->triggerCommand('start');
 
             } else {
-				
-				
+
+
 				/**
 				 * Referral
 				 */
 				if (!empty($arguments)) {
 					Referrals::BindAccount($arguments, $id);
 				}
-				
 
-                /**
-                 * Keyboard
-                 */
-                $keyboard = [
-                    ["My balance " . Btc::Format($user->getBalance()) . " \xF0\x9F\x92\xB0"],
-                    ["Invest \xF0\x9F\x92\xB5", "Withdraw \xE2\x8C\x9B"],
-                    ["Reinvest \xE2\x86\xA9", "Help \xE2\x9D\x93"],
-                    ["My Team \xF0\x9F\x91\xAB"],
-                ];
 
-                $reply_markup = $this->telegram->replyKeyboardMarkup([
-                    'keyboard'          => $keyboard,
-                    'resize_keyboard'   => true,
-                    'one_time_keyboard' => false,
-                ]);
+				/**
+				 * Teclado
+				 */
+		$keyboard = [
+			[ "Balance " . Btc::Format($user->getBalance()) . " \xF0\x9F\x92\xB0" ],
+			[ "Invertir \xF0\x9F\x92\xB5", "Retirar \xE2\x8C\x9B" ],
+			[ "Preguntas \xE2\x86\xA9", "Ayuda \xE2\x9D\x93" ],
+			[ "Mis referidos \xF0\x9F\x91\xAB","Importante \xE2\x80\xBC" ],
+			[ "Idioma-Language \xF0\x9F\x94\xA0" ],
+		];
+
+				$reply_markup = $this->telegram->replyKeyboardMarkup([
+						'keyboard'          => $keyboard,
+						'resize_keyboard'   => true,
+						'one_time_keyboard' => false,
+				]);
 
                 /**
                  * Response
                  */
                 $this->replyWithMessage([
-                    'text'         => "Nice to see you again <b>" . $first_name . "</b>\nTo explore me use controls below. \xF0\x9F\x98\x84 \n To get support please go to " . BotSetting::getValueByName("support_chat_id"),
+                    'text'         => "Hola de nuevo <b>" . $first_name . "</b>\nSeleciona una de las opciones en el menu para continuar. \xF0\x9F\x98\x84 \n Si necesitas más ayuda contacta a quien te ha referido" . BotSetting::getValueByName("telegram_id_referent"),
                     'reply_markup' => $reply_markup,
                     'parse_mode'   => 'HTML',
                 ]);
@@ -125,21 +126,22 @@ class StartCommand extends Command
         }
         catch (Exception $e){
 
-            $keyboard = [
-                ["My balance \xF0\x9F\x92\xB0"],
-                ["Invest \xF0\x9F\x92\xB5", "Withdraw \xE2\x8C\x9B"],
-                ["Reinvest \xE2\x86\xA9", "Help \xE2\x9D\x93"],
-                ["My Team \xF0\x9F\x91\xAB"],
-            ];
+					$keyboard = [
+						[ "Balance " . Btc::Format($user->getBalance()) . " \xF0\x9F\x92\xB0" ],
+						[ "Invertir \xF0\x9F\x92\xB5", "Retirar \xE2\x8C\x9B" ],
+						[ "Preguntas \xE2\x86\xA9", "Ayuda \xE2\x9D\x93" ],
+						[ "Mis referidos \xF0\x9F\x91\xAB","Importante \xE2\x80\xBC" ],
+						[ "Idioma-Language \xF0\x9F\x94\xA0" ],
+					];
 
-            $reply_markup = $this->telegram->replyKeyboardMarkup([
-                'keyboard'          => $keyboard,
-                'resize_keyboard'   => true,
-                'one_time_keyboard' => false,
-            ]);
+							$reply_markup = $this->telegram->replyKeyboardMarkup([
+									'keyboard'          => $keyboard,
+									'resize_keyboard'   => true,
+									'one_time_keyboard' => false,
+							]);
 
             $this->replyWithMessage([
-                'text'         => "An error occurred.\n" . $e->getMessage() . ". \xF0\x9F\x98\x96",
+                'text'         => "Ha ocurrido un error.\n" . $e->getMessage() . ". \xF0\x9F\x98\x96",
                 'reply_markup' => $reply_markup,
                 'parse_mode'   => 'HTML'
             ]);

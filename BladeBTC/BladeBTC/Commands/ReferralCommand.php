@@ -53,12 +53,13 @@ class ReferralCommand extends Command
 			/**
 			 * Keyboard
 			 */
-			$keyboard = [
-				["My balance " . Btc::Format($user->getBalance()) . " \xF0\x9F\x92\xB0"],
-				["Invest \xF0\x9F\x92\xB5", "Withdraw \xE2\x8C\x9B"],
-				["Reinvest \xE2\x86\xA9", "Help \xE2\x9D\x93"],
-				["My Team \xF0\x9F\x91\xAB"],
-			];
+			 $keyboard = [
+	 			[ "Balance " . Btc::Format($user->getBalance()) . " \xF0\x9F\x92\xB0" ],
+	 			[ "Invertir \xF0\x9F\x92\xB5", "Retirar \xE2\x8C\x9B" ],
+	 			[ "Preguntas \xE2\x86\xA9", "Ayuda \xE2\x9D\x93" ],
+	 			[ "Mis referidos \xF0\x9F\x91\xAB","Importante \xE2\x80\xBC" ],
+	 			[ "Idioma-Language \xF0\x9F\x94\xA0" ],
+	 		];
 
 			$reply_markup = $this->telegram->replyKeyboardMarkup([
 				'keyboard'          => $keyboard,
@@ -68,18 +69,18 @@ class ReferralCommand extends Command
 
 
 			$this->replyWithMessage([
-				'text'         => "<b>Referral System:</b>
+				'text'         => "<b>Mis referidos:</b>
 
-Use the following link to refer your friends and you will get a 10% bonus on the first investment and on their reinvestment.
+Envia este enlace a tus amigos y familia para empezar a recibir tu comisión.
 
-<b>Your referral link to share with your friends:</b>
+<b>Este es tu enlace personal:</b>
 https://t.me/" . BotSetting::getValueByName("app_name") . "?start=" . $user->getReferralLink() . "
 
-<b>My Stats</b>
+<b>Mi equipo</b>
 
-Total referrals : <b>" . Referrals::getTotalReferrals($user->getTelegramId()) . "</b>
+Total referidos : <b>" . Referrals::getTotalReferrals($user->getTelegramId()) . "</b>
 
-Members | Active | Invest
+Miembros | Activos | Inversión
 " . Referrals::getTotalReferrals($user->getTelegramId()) . " | " . Referrals::getActiveReferrals($user->getTelegramId()) . " | " . Btc::Format(Referrals::getReferralsInvest($user->getTelegramId())) . " BTC
 ",
 				'reply_markup' => $reply_markup,

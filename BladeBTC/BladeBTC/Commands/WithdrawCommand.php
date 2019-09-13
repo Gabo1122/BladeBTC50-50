@@ -53,12 +53,13 @@ class WithdrawCommand extends Command
             /**
              * Keyboard
              */
-            $keyboard = [
-                [ "My balance " . Btc::Format($user->getBalance()) . " \xF0\x9F\x92\xB0" ],
-                [ "Invest \xF0\x9F\x92\xB5", "Withdraw \xE2\x8C\x9B" ],
-                [ "Reinvest \xE2\x86\xA9", "Help \xE2\x9D\x93" ],
-                [ "My Team \xF0\x9F\x91\xAB" ],
-            ];
+             $keyboard = [
+         			[ "Balance " . Btc::Format($user->getBalance()) . " \xF0\x9F\x92\xB0" ],
+         			[ "Invertir \xF0\x9F\x92\xB5", "Retirar \xE2\x8C\x9B" ],
+         			[ "Preguntas \xE2\x86\xA9", "Ayuda \xE2\x9D\x93" ],
+         			[ "Mis referidos \xF0\x9F\x91\xAB","Importante \xE2\x80\xBC" ],
+         			[ "Idioma-Language \xF0\x9F\x94\xA0" ],
+         		];
 
             $reply_markup = $this->telegram->replyKeyboardMarkup([
                 'keyboard' => $keyboard,
@@ -72,11 +73,11 @@ class WithdrawCommand extends Command
             if (is_null($user->getWalletAddress())) {
 
                 $this->replyWithMessage([
-                    'text' => "Your withdraw address is <b>not set</b>\n
-Use command /set to update your account with your withdraw address.\n
-For example:\n
-/set 19a7txmi1fPaNaTiBec6uopVHJ4BxpxZEE\n
-It's possible to change your withdraw address at any time using this command.",
+                    'text' => "Tu dirección de Bitcoin <b>aún ha sido configurada</b>\n
+Para configurarla utiliza el comando /direccion seguido de tu dirección.\n
+Ejemplo:\n
+/direccion 1JrkEVAPaEnb48jeXgomFSgNqTNcvjgjTc\n
+Puedes cambiar tu direccion en cualquier momento con esta opcion.",
                     'reply_markup' => $reply_markup,
                     'parse_mode' => 'HTML',
                 ]);
@@ -85,12 +86,12 @@ It's possible to change your withdraw address at any time using this command.",
             else {
 
                 $this->replyWithMessage([
-                    'text' => "Your withdraw address is :\n
+                    'text' => "Tu dirección para retirar es :\n
 <b>" . $user->getWalletAddress() . "</b>\n
-Use command /set to update your account with your withdraw address.\n\nFor example:\n/set 19a7txmi1fPaNaTiBec6uopVHJ4BxpxZEE\n
-Use command /out to withdraw your balance.\n\nFor example:\n/out 1.2\n
-Specified amount will be delivered to your address ASAP.
-(Usually during one or two hours - min: " . Currency::GetBTCValueFromCurrency(InvestmentPlan::getValueByName("minimum_payout_usd")) . "BTC).",
+Utiliza el comando /direccion para actualizar tu cuenta.\n\nPor ejemplo:\n/direccion 1JrkEVAPaEnb48jeXgomFSgNqTNcvjgjTc\n
+Utiliza el comando /sacar para retirar fondos.\n\nPor ejemplo:\n/sacar 1.2\n
+Y el monto deseado será transferido a la dirección configurada.
+(Aproximadamente en una hora: " . Currency::GetBTCValueFromCurrency(InvestmentPlan::getValueByName("minimum_payout_usd")) . "BTC).",
                     'reply_markup' => $reply_markup,
                     'parse_mode' => 'HTML',
                 ]);
