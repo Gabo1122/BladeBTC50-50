@@ -68,8 +68,8 @@ DEBE TENER UN 'ESTADO DE INVERSOR ACTIVO' PARA SER ELEGIBLE PARA PAGOS. El pago 
 Bitcoin es un activo extremadamente volátil y cuando está en una tendencia alcista, su inversión puede duplicarse, triplicarse o más en solo meses! Bitcoin también es una forma efectiva de realizar depósitos y retiros instantáneos sin la necesidad de un banco o corporación.\n
 \n
 <b>¿Cómo puedo comprar Bitcoin?</b>\n
-Puedes buscar en google maps donde puedes encontrar cajero de Bitcoin, tambien puedes utilizar el servicio <a href='https://old.changelly.com/?ref_id=c9fa0894f875'>Changelly</a> donde puedes comprar BTC con tu tajeta de crédito o débito.\n
-\n
+
+Puedes buscar en google maps donde puedes encontrar cajero de Bitcoin, tambien puedes utilizar el servicio <a href='https://old.changelly.com/?ref_id=c9fa0894f875'>Changelly</a> donde puedes comprar BTC con tu tajeta de crédito o débito.\\n
 \n<b>Si necesitas ayuda contácta a quien te ha referido</b>\n" . BotSetting::getValueByName("support_chat_id"),
                 'reply_markup' => $reply_markup,
                 'parse_mode' => 'HTML',
