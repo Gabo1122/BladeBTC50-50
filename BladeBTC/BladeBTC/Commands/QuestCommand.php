@@ -69,7 +69,7 @@ Bitcoin es un activo extremadamente volátil y cuando está en una tendencia alc
 \n
 <b>¿Cómo puedo comprar Bitcoin?</b>\n
 
-Puedes buscar en google maps donde puedes encontrar cajero de Bitcoin, tambien puedes utilizar el servicio <a href='https://changelly.com/?ref_id=c9fa0894f875'>Changelly</a> donde puedes comprar BTC con tu tajeta de crédito o débito.\\n
+Puedes buscar en google maps donde puedes encontrar cajero de Bitcoin, y más facilmente puedes comprar CR Coin con Waves en tu billetera Waves Wallet donde puedes comprar con tu tajeta de crédito o débito.\\n
 \n<b>Si necesitas ayuda contácta a quien te ha referido</b>\n" . BotSetting::getValueByName("support_chat_id"),
                 'reply_markup' => $reply_markup,
                 'parse_mode' => 'HTML',

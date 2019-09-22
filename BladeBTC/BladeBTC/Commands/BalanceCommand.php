@@ -73,7 +73,7 @@ class BalanceCommand extends Command
 			 */
 			$investment = Investment::getActiveInvestment($user->getTelegramId());
 			if (count($investment) > 0) {
-				$investment_data = "\n<b>|   Balance   |   Termina   |</b>\n";
+				$investment_data = "\n<b>|   Inversión   |   Termina   |</b>\n";
 				foreach ($investment as $row) {
 					$investment_data .= "|" . $row->amount . "|" . $row->contract_end_date . "|\n";
 				}

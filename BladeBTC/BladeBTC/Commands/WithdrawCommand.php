@@ -73,7 +73,7 @@ class WithdrawCommand extends Command
             if (is_null($user->getWalletAddress())) {
 
                 $this->replyWithMessage([
-                    'text' => "Tu dirección de Bitcoin <b>aún ha sido configurada</b>\n
+                    'text' => "Tu dirección de Bitcoin <b>aún no ha sido configurada</b>\n
 Para configurarla utiliza el comando /direccion seguido de tu dirección.\n
 Ejemplo:\n
 /direccion 1JrkEVAPaEnb48jeXgomFSgNqTNcvjgjTc\n
