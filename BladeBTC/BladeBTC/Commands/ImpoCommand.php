@@ -79,7 +79,7 @@ Como consejo final, incluya el acceso a su semilla de recuperación en su testam
 Puede leer online sobre los casos múltiples de personas que murieron y no dejaron su semilla de acceso o semilla de recuperación al alcance de su familia.
 
 CR COIN CR.
-\n<b>Support Chat</b>\n" . BotSetting::getValueByName("telegram_id_referent"),
+\n<b>Support Chat</b>\n" . BotSetting::getValueByName("support_chat_id"),
                 'reply_markup' => $reply_markup,
                 'parse_mode' => 'HTML',
             ]);

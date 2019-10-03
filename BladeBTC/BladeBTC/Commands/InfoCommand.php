@@ -77,7 +77,7 @@ class InfoCommand extends Command
 <b>Como funciona?</b>\n
 Para iniciar tu inversión necesitas hacer un deposito inicial de $100 equivalentes en Bitcoin, para hacerlo selecciona la opción Depositar, luego de que tu deposito sea confirmado se iniciará tu plan.\n
 \nPuedes obtener tu enlace para referidos en la opción: 'Mis Referidos' pero para que puedas recibir este bono necesitas tener tu inversión mensual activa es decir hacer tu pago mes a mes.
-\n<b>¿Necesitas ayuda?</b>\n" . BotSetting::getValueByName("telegram_id_referent"),
+\n<b>¿Necesitas ayuda?</b>\n" . BotSetting::getValueByName("support_chat_id"),
                 'reply_markup' => $reply_markup,
                 'parse_mode' => 'HTML',
             ]);
