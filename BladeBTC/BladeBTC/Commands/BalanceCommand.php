@@ -92,7 +92,7 @@ Total invertido:
 <b>" . Btc::Format($user->getInvested()) . "</b> BTC\n
 Total para retirar:
 <b>" . Btc::Format($user->getPayout()) . "</b> BTC\n
-Comisión pendiente (Por referidos):
+Ganancia pendiente (Por referidos):
 <b>" . Btc::Format($user->getCommission()) . "</b> BTC\n
 Total depositado (confirmado):
 <b>" . Btc::Format($user->getLastConfirmed()) . "</b> BTC\n

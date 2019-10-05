@@ -117,7 +117,7 @@ class ReinvestCommand extends Command
                          * Response
                          */
                         $this->replyWithMessage([
-                            'text' => "Congratulation your balance has been properly invested!",
+                            'text' => "Tu inversion ha iniciado!",
                             'reply_markup' => $reply_markup,
                             'parse_mode' => 'HTML',
                         ]);
@@ -131,7 +131,7 @@ class ReinvestCommand extends Command
                     } catch (Exception $e) {
 
                         $this->replyWithMessage([
-                            'text' => "An error occurred while generating your payment address.\n" . $e->getMessage() . ". \xF0\x9F\x98\x96",
+                            'text' => "Ha ocurrido un error.\n" . $e->getMessage() . ". \xF0\x9F\x98\x96",
                             'reply_markup' => $reply_markup,
                             'parse_mode' => 'HTML'
                         ]);

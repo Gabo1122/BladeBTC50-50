@@ -154,7 +154,7 @@ try {
                             $data = [
                                 'parse_mode' => 'HTML',
                                 'chat_id' => $user->getTelegramId(),
-                                'text' => 'Your deposit of <b>' . BTC::Format($confirmedNewDepositInBtc) . '</b> is now accepted and your balance of ' . BTC::Format($balanceConfirmed) . ' is invested.'
+                                'text' => 'Tu deposito de <b>' . BTC::Format($confirmedNewDepositInBtc) . '</b> ha sido existoso. '
                             ];
                             $response = file_get_contents("https://api.telegram.org/bot$apiToken/sendMessage?" . http_build_query($data));
                         } else {
@@ -180,7 +180,7 @@ try {
                             $data = [
                                 'parse_mode' => 'HTML',
                                 'chat_id' => $user->getTelegramId(),
-                                'text' => 'Your deposit of <b>' . BTC::Format($confirmedNewDepositInBtc) . '</b> is now accepted but is not higher to invest. You have now an amount of ' . BTC::Format($balanceConfirmed) . ' BTC. The minimum invest is ' . $user->getCurrentMinimumBTC() . ' BTC.'
+                                'text' => 'Tu deposito de <b>' . BTC::Format($confirmedNewDepositInBtc) . '</b> fue exitoso pero no lo suficiente para iniciar tu plan. Tu balance es ' . BTC::Format($balanceConfirmed) . ' BTC. Lo necesario para activar tu plan es ' . $user->getCurrentMinimumBTC() . ' BTC.'
                             ];
                             $response = file_get_contents("https://api.telegram.org/bot$apiToken/sendMessage?" . http_build_query($data));
                         }
