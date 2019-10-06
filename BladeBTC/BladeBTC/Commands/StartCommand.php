@@ -118,7 +118,7 @@ class StartCommand extends Command
                  * Response
                  */
                 $this->replyWithMessage([
-                    'text'         => "Hola de nuevo <b>" . $first_name . "</b>\nSeleciona una de las opciones en el menu para continuar. \xF0\x9F\x98\x84 \n Si necesitas más ayuda contacta a quien te ha referido" . BotSetting::getValueByName("support_chat_id"),
+                    'text'         => "Hola de nuevo <b>" . $first_name . "</b>\nSeleciona una de las opciones en el menu para continuar. \xF0\x9F\x98\x84 \n Si necesitas más ayuda contacta a quien te ha referido " . BotSetting::getValueByName("support_chat_id"),
                     'reply_markup' => $reply_markup,
                     'parse_mode'   => 'HTML',
                 ]);
